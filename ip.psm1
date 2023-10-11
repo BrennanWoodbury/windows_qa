@@ -1,4 +1,4 @@
-$logFile = "logs.log"
+Import-Module .\config.psm1
 
 function ipConfig {
     '--------' | Out-File -FilePath $logFile -Append

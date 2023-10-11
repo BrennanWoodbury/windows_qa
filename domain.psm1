@@ -1,4 +1,5 @@
-$logFile = "logs.log"
+Import-Module .\config.psm1
+
 function domain {
     '--------' | Out-File -FilePath $logFile -Append
     'Domain Config' | Out-File -FilePath $logFile -Append
