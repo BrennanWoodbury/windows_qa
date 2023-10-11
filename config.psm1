@@ -6,4 +6,4 @@ $serviceNames = @(
 )
 
 
-$logpath = "$env:USERPROFILE\BCS_QA_logs"
+$logFile = "$env:USERPROFILE\BCS_QA_logs\qa.log"
