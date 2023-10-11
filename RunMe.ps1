@@ -1,13 +1,13 @@
 Import-Module .\config.psm1
 
-function adminGroup {
+function getAdminGroup {
     '--------' | Out-File -FilePath $logFile -Append
     'GroupMembership' | Out-File -FilePath $logFile -Append
     & net localgroup Administrators | Out-File -FilePath $logFile -Append
     '--------' | Out-File -FilePath $logFile -Append
 }   
 
-function services {
+function getServices {
     foreach ($name in $serviceNames) {
         if (Get-Service -Name $name -ErrorAction SilentlyContinue) {
             $service = Get-Service -Name $name
@@ -25,7 +25,7 @@ function services {
     }
 }
 
-function domain {
+function getDomain {
     '--------' | Out-File -FilePath $logFile -Append
     'Domain Config' | Out-File -FilePath $logFile -Append
 
@@ -34,7 +34,7 @@ function domain {
     '--------' | Out-File -FilePath $logFile -Append
 }
 
-function hardwareConfig {
+function getHardwareConfig {
     $cpuInfo = Get-WmiObject -Class Win32_Processor
     $ramInfo = Get-WmiObject -Class Win32_ComputerSystem
     $ramInGb = $([math]::Round($ramInfo.TotalPhysicalMemory / 1GB, 2))
@@ -51,14 +51,14 @@ function hardwareConfig {
     '--------' | Out-File -FilePath $logFile -Append
 }
 
-function ipConfig {
+function getIpConfig {
     '--------' | Out-File -FilePath $logFile -Append
     'Network Config' | Out-File -FilePath $logFile -Append
     & Get-NetIPConfiguration -All | Out-File -FilePath $logFile -Append
     '--------' | Out-File -FilePath $logFile -Append
 }
 
-function lastUpdated {
+function getLastUpdated {
     '--------' | Out-File -FilePath $logFile -Append
     'Update History' | Out-File -FilePath $logFile -Append
     & Get-Hotfix | Sort-Object InstalledOn -Descending | Out-File -FilePath $logFile -Append
@@ -66,9 +66,9 @@ function lastUpdated {
 }
 
 
-adminGroup
-services
-domain
-hardwareConfig
-ipConfig
-lastUpdated
+getAdminGroup
+getServices
+getDomain
+getHardwareConfig
+getIpConfig
+getLastUpdated
