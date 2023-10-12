@@ -3,20 +3,6 @@ $currentDateTime = Get-Date -Format "yyyyMMdd_HHmmss"
 
 $logFile = "$env:USERPROFILE\Desktop\BCS_QA_logs\$hostname-$currentDateTime.log"
 
-# $serviceNames = @(
-#     "CSFalconService", 
-#     "Sophos", 
-#     "TripwireAxonAgent", 
-#     "TripwireAxinAgentTLC",
-#     "TripwireEventGeneratorService",
-#     "wuauserv",
-#     "VMTools",
-#     "Tenable Nessus Agent",
-#     "SNMP",
-#     "MSSQLSERVER"
-
-# )
-
 $serviceNames = @{
     "Crowdstrike"    = "CSFalconService"
     "Sophos"         = "Sophos"
@@ -57,14 +43,14 @@ function getServices {
             $service = Get-Service -Name $name
 
             if ($service.Status -eq 'Running') {
-                "$key is installed and running" | Out-File -FilePath "$logFile" -Encoding UTF8 -Append
+                "+ $key is installed and running" | Out-File -FilePath "$logFile" -Encoding UTF8 -Append
             }
             else {
-                "$key is installed, but is not running" | Out-File -FilePath "$logFile" -Encoding UTF8 -Append
+                "- $key is installed, but is NOT running" | Out-File -FilePath "$logFile" -Encoding UTF8 -Append
             }
         }
         else {
-            "$key is not installed" | Out-File -FilePath "$logFile" -Encoding UTF8 -Append
+            "- $key is NOT installed" | Out-File -FilePath "$logFile" -Encoding UTF8 -Append
         }
     }
     '--------' | Out-File -FilePath "$logFile" -Encoding UTF8 -Append 
